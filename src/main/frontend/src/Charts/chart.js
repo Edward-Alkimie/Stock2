@@ -11,28 +11,28 @@ export const Charts = ({ myData }) => {
 
 
 
-    // const userGraphSetting = [
-    //     [
-    //         {
-    //             timeFrame: "annual",
-    //             lineValue: "totalDebtToTotalAsset"
-    //         },
-    //         {
-    //             timeFrame: "annual",
-    //             lineValue: "totalDebtToTotalCapital"
-    //         }
-    //     ],
-    //     [
-    //         {
-    //             timeFrame: "annual",
-    //             lineValue: "eps"
-    //         },
-    //         {
-    //             timeFrame: "annual",
-    //             lineValue: "ebitPerShare"
-    //         }
-    //     ]
-    // ]
+    const userGraphSetting = [
+        [
+            {
+                timeFrame: "annual",
+                lineValue: "totalDebtToTotalAsset"
+            },
+            {
+                timeFrame: "annual",
+                lineValue: "totalDebtToTotalCapital"
+            }
+        ],
+        [
+            {
+                timeFrame: "annual",
+                lineValue: "eps"
+            },
+            {
+                timeFrame: "annual",
+                lineValue: "ebitPerShare"
+            }
+        ]
+    ]
 
     let xAxisLoopFlag = false;
     // console.log("this is basic info before render" + JSON.stringify(basicInfo.series.annual))
@@ -40,21 +40,8 @@ export const Charts = ({ myData }) => {
 
     const stockData = basicInfo.series;
     console.log("this is stock data before render" + JSON.stringify(stockData['annual']['eps']))
+    console.log("this is graph data before render " + JSON.stringify(userGraph))
 
-// return (
-//         <div>
-//             {
-//                 userGraph.map((item) => (
-//                     item.map((item2) =>(
-//
-//                         <>{item2.graphNumber}</>
-//                     ))
-//                     )
-//
-//                 )
-//             }
-//         </div>
-// )
 
 
 
@@ -76,9 +63,8 @@ export const Charts = ({ myData }) => {
                     {xAxisLoopFlag = false}
                     {item.map((item2, index2) => (
                         <>
-                        {/*{item2}*/}
-                            <Line name={item2.value} xAxisId={item2.value} type="monotone" data={stockData[item2.timeFrame]["value"]} dataKey="v" stroke="#800080" activeDot={{ r: 8 }} />
-                            <XAxis xAxisId={item2.value} data={stockData[item2.timeFrame]["value"]} dataKey="period" reversed="true" hide={xAxisLoopFlag} />
+                            <Line name={item2.value} xAxisId={item2.value} type="monotone" data={stockData[item2.timeFrame][item2.value]} dataKey="v" stroke="#800080" activeDot={{ r: 8 }} />
+                            <XAxis xAxisId={item2.value} data={stockData[item2.timeFrame][item2.value]} dataKey="period" reversed="true" hide={xAxisLoopFlag} />
                             {xAxisLoopFlag = true}
                         </>
                     ))}
@@ -87,19 +73,6 @@ export const Charts = ({ myData }) => {
             )
 
             )}
-
-        {/*             <>*/}
-        {/*                {*/}
-        {/*        userGraph.map((item) => (*/}
-        {/*            item.map((item2) =>(*/}
-
-        {/*                <>{item2.value}</>*/}
-        {/*            ))*/}
-        {/*            )*/}
-
-        {/*        )*/}
-        {/*   }*/}
-        {/*</>*/}
 
         </div>
 
