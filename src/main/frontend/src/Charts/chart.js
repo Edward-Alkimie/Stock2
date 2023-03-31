@@ -1,72 +1,66 @@
 import React, { useContext } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { StockBasicContext } from '../APIContext/SearchAPI';
-import { apple } from '../APIContext/Apple';
-
+import { UserGraphKeysContext } from '../UserGraphKeys/UserGraphKeysProvider';
+import {userGraphs} from "../UserGraphKeys/UserGraphKeysProvider";
 
 
 export const Charts = ({ myData }) => {
-    const { basicInfo } = useContext(StockBasicContext)
+    const {basicInfo} = useContext(StockBasicContext)
+    const {userGraph} = useContext(UserGraphKeysContext)
 
-    // in the future it will in a different file
-    // const userGraphSetting = {
-    //     chartSetting: [
+
+
+    // const userGraphSetting = [
+    //     [
     //         {
-    //             graph: [
-    //                 {
-    //                     timeFrame: "annual",
-    //                     lineValue: "totalDebtToTotalAsset"
-    //                 },
-    //                 {
-    //                     timeFrame: "annual",
-    //                     lineValue: "totalDebtToTotalCapital"
-    //                 }
-    //             ]
+    //             timeFrame: "annual",
+    //             lineValue: "totalDebtToTotalAsset"
     //         },
     //         {
-    //             graph: [
-    //                 {
-    //                     timeFrame: "annual",
-    //                     lineValue: "eps"
-    //                 },
-    //                 {
-    //                     timeFrame: "annual",
-    //                     lineValue: "ebitPerShare"
-    //                 }
-    //             ]
+    //             timeFrame: "annual",
+    //             lineValue: "totalDebtToTotalCapital"
+    //         }
+    //     ],
+    //     [
+    //         {
+    //             timeFrame: "annual",
+    //             lineValue: "eps"
+    //         },
+    //         {
+    //             timeFrame: "annual",
+    //             lineValue: "ebitPerShare"
     //         }
     //     ]
-    // }
-
-    const userGraphSetting = [
-        [
-            {
-                timeFrame: "annual",
-                lineValue: "totalDebtToTotalAsset"
-            },
-            {
-                timeFrame: "annual",
-                lineValue: "totalDebtToTotalCapital"
-            }
-        ],
-        [
-            {
-                timeFrame: "annual",
-                lineValue: "eps"
-            },
-            {
-                timeFrame: "annual",
-                lineValue: "ebitPerShare"
-            }
-        ]
-    ]
+    // ]
 
     let xAxisLoopFlag = false;
-    const stockData = apple['series']
-    //
+    // console.log("this is basic info before render" + JSON.stringify(basicInfo.series.annual))
+    // console.log("this is userGraph before render" + JSON.stringify(userGraph))
+
+    const stockData = basicInfo.series;
+    console.log("this is stock data before render" + JSON.stringify(stockData['annual']['eps']))
+
+// return (
+//         <div>
+//             {
+//                 userGraph.map((item) => (
+//                     item.map((item2) =>(
+//
+//                         <>{item2.graphNumber}</>
+//                     ))
+//                     )
+//
+//                 )
+//             }
+//         </div>
+// )
+
+
+
     return (
         <div>
-            {userGraphSetting.map((item, index) => (
+            {userGraph.map((item, index) => (
                 <LineChart
                     width={1200}
                     height={600}
@@ -82,8 +76,9 @@ export const Charts = ({ myData }) => {
                     {xAxisLoopFlag = false}
                     {item.map((item2, index2) => (
                         <>
-                            <Line name={item2.lineValue} xAxisId={item2.lineValue} type="monotone" data={stockData[item2.timeFrame][item2.lineValue]} dataKey="v" stroke="#800080" activeDot={{ r: 8 }} />
-                            <XAxis xAxisId={item2.lineValue} data={stockData[item2.timeFrame][item2]} dataKey="period" reversed="true" hide={xAxisLoopFlag} />
+                        {/*{item2}*/}
+                            <Line name={item2.value} xAxisId={item2.value} type="monotone" data={stockData[item2.timeFrame]["value"]} dataKey="v" stroke="#800080" activeDot={{ r: 8 }} />
+                            <XAxis xAxisId={item2.value} data={stockData[item2.timeFrame]["value"]} dataKey="period" reversed="true" hide={xAxisLoopFlag} />
                             {xAxisLoopFlag = true}
                         </>
                     ))}
@@ -92,6 +87,19 @@ export const Charts = ({ myData }) => {
             )
 
             )}
+
+        {/*             <>*/}
+        {/*                {*/}
+        {/*        userGraph.map((item) => (*/}
+        {/*            item.map((item2) =>(*/}
+
+        {/*                <>{item2.value}</>*/}
+        {/*            ))*/}
+        {/*            )*/}
+
+        {/*        )*/}
+        {/*   }*/}
+        {/*</>*/}
 
         </div>
 
