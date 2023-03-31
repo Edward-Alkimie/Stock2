@@ -1,32 +1,32 @@
-import SearchBar from './SearchBar/SearchBar'
-// import { SimpleChart } from './Charts/SimpleChart';
+import SearchBar from './Search/SearchBar'
 import './App.css';
-import {Basic, StockBasicContext} from './APIContext/SearchAPI';
-import {UserGraphKeysContext, userGraphs} from './UserGraphKeys/UserGraphKeysProvider';
-import {useEffect, useState} from 'react';
+
+import {userGraphs} from './UserGraph/UserGraphKeysProvider';
+import {UserGraphContext} from './UserGraph/UserGraphContext'
+import React, {useEffect, useState} from 'react';
 import { Charts } from './Charts/chart'
+import {SearchContext} from "./Search/SearchContext";
 
 function App() {
   const [basicInfo, setBasicInfo] = useState(null);
   const [userGraph, setUserGraph] = useState(null);
 
   useEffect(() =>{
-      // Basic("aapl", setBasicInfo)
       userGraphs(setUserGraph)
   },[])
-    // userGraphs(setUserGraph)
+
+
   return (
     <div className="App">
       <>
       hello1</>
-       <StockBasicContext.Provider value={{ basicInfo, setBasicInfo }}>
-         <UserGraphKeysContext.Provider value={{ userGraph, setUserGraph }}>
-          {/* <div>hello</div> */}
+       <SearchContext.Provider value={{ basicInfo, setBasicInfo }}>
+         <UserGraphContext.Provider value={{ userGraph, setUserGraph }}>
           <SearchBar />
              {basicInfo && <Charts />}
-          {/* {basicInfo && <SimpleChart/>} */}
-         </UserGraphKeysContext.Provider>
-       </StockBasicContext.Provider>
+
+         </UserGraphContext.Provider>
+       </SearchContext.Provider>
     </div>
   );
 }

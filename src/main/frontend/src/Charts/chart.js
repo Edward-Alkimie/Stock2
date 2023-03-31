@@ -1,49 +1,17 @@
 import React, { useContext } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-import { StockBasicContext } from '../APIContext/SearchAPI';
-import { UserGraphKeysContext } from '../UserGraphKeys/UserGraphKeysProvider';
-import {userGraphs} from "../UserGraphKeys/UserGraphKeysProvider";
-
+import { UserGraphContext } from '../UserGraph/UserGraphContext';
+import {SearchContext} from "../Search/SearchContext";
 
 export const Charts = ({ myData }) => {
-    const {basicInfo} = useContext(StockBasicContext)
-    const {userGraph} = useContext(UserGraphKeysContext)
-
-
-
-    const userGraphSetting = [
-        [
-            {
-                timeFrame: "annual",
-                lineValue: "totalDebtToTotalAsset"
-            },
-            {
-                timeFrame: "annual",
-                lineValue: "totalDebtToTotalCapital"
-            }
-        ],
-        [
-            {
-                timeFrame: "annual",
-                lineValue: "eps"
-            },
-            {
-                timeFrame: "annual",
-                lineValue: "ebitPerShare"
-            }
-        ]
-    ]
-
+    const {basicInfo} = useContext(SearchContext)
+    const {userGraph} = useContext(UserGraphContext)
     let xAxisLoopFlag = false;
-    // console.log("this is basic info before render" + JSON.stringify(basicInfo.series.annual))
-    // console.log("this is userGraph before render" + JSON.stringify(userGraph))
-
     const stockData = basicInfo.series;
-    console.log("this is stock data before render" + JSON.stringify(stockData['annual']['eps']))
-    console.log("this is graph data before render " + JSON.stringify(userGraph))
 
-
-
+    // data check
+    // console.log("this is stock data before render" + JSON.stringify(stockData['annual']['eps']))
+    // console.log("this is graph data before render " + JSON.stringify(userGraph))
 
     return (
         <div>
@@ -71,9 +39,7 @@ export const Charts = ({ myData }) => {
                     <Legend />
                 </LineChart>
             )
-
             )}
-
         </div>
 
 
